@@ -10,9 +10,9 @@
 ユーザは特別なアプリをインストールすることなく、Webブラウザでアクセスするだけで室町時代に存在していた丹後国分寺五重塔を跡地にMR表示できる。  
 
 ## システム構成
-* [ClientSide：利用者（クライアント）がアクセスするWebページ](./ClientSide/README.md)
-* [RenderingServer：MR表示に必要なレンダリングを行うサーバ。3台のWindow PC。](./RenderingServer/README.md)
-* [APIServer：接続してくるクライアントを3台のレンダリングサーバに割り振る。1台のUbuntu PC](./APIServer/README.md)
+* [ClientSide：利用者（クライアント）がアクセスするWebページ](./ClientSide)
+* [RenderingServer：MR表示に必要なレンダリングを行うサーバ。3台のWindow PC。](./RenderingServer)
+* [APIServer：接続してくるクライアントを3台のレンダリングサーバに割り振る。1台のUbuntu PC](./APIServer)
   
 レンダリングサーバは大学内に、APIサーバは自宅に環境を構築。ClientSideはレンタルサーバを利用。
 
