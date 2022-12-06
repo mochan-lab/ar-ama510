@@ -6,5 +6,3 @@ graceful_timeout=60
 loglevel = "debug"
 accesslog = None
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
-#certfile = '/etc/letsencrypt/live/amatakat.tech/fullchain.pem'
-#keyfile = '/etc/letsencrypt/live/amatakat.tech/privkey/pem'

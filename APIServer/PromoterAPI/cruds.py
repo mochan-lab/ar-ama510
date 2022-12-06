@@ -1,3 +1,5 @@
+#SQL操作の各関数
+
 import random, string, datetime
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
@@ -76,16 +78,6 @@ def set_peerid_status(db: Session, rserver: int, toclient: schemas.DMPeerID):
     db.refresh(client)
     # client=get_client(db, toclient.client)
     return client
-
-# def set_rserver(db: Session, clientname: str, rserver: int, newstatus: str):
-#     client=get_client(db, clientname)
-#     client.rserver=rserver
-#     client.status=newstatus
-#     client.updatedatetime=datetime.datetime.now()
-#     db.commit()
-#     db.refresh(client)
-#     # client=get_client(db, clientname)
-#     return client
 
 def find_new_client(db: Session, rserverid: int):
     rserver=get_rserver(db, rserverid)

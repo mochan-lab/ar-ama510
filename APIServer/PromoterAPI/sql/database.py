@@ -2,7 +2,8 @@ from sqlalchemy import Boolean, Column, Integer, String, DateTime, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test4.db"
+#データベースファイルの設定。SQLiteを利用。
+SQLALCHEMY_DATABASE_URL = "sqlite:///./DatabaseName.db"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}

@@ -3,7 +3,7 @@
 int MySkyway::MMakePeer(MyHttp& mysock, MyUserClass& myuser)
 {
 	std::string body;
-	body = R"({"key":")" + apikey + R"(","domain":"133.1.57.252","peer_id":")" + myuser.MPeerId() + R"(","turn":true})";
+	body = R"({"key":")" + apikey + R"(","domain":"MyGlobalIP","peer_id":")" + myuser.MPeerId() + R"(","turn":true})";
 
 	std::string sendBody = MyHttp::MakeHttpValue("POST", "/peers", skywayHost, "application/json", body);
 	mysock.SendStr(sendBody);
@@ -26,7 +26,7 @@ int MySkyway::MMakePeer(MyHttp& mysock, MyUserClass& myuser)
 int MySkyway::DMakePeer(MyHttp& mysock, MyUserClass& myuser)
 {
 	std::string body;
-	body = R"({"key":")" + apikey + R"(","domain":"133.1.57.252","peer_id":")" + myuser.DPeerId() + R"(","turn":true})";
+	body = R"({"key":")" + apikey + R"(","domain":"MyGlobalIP","peer_id":")" + myuser.DPeerId() + R"(","turn":true})";
 
 	std::string sendBody = MyHttp::MakeHttpValue("POST", "/peers", skywayHost, "application/json", body);
 	mysock.SendStr(sendBody);

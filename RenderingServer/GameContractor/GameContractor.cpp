@@ -1,19 +1,16 @@
-﻿// GameContractor.cpp : このファイルには 'main' 関数が含まれています。プログラム実行の開始と終了がそこで行われます。
-//
+﻿#include "GameContractor.h"
 
-#include "GameContractor.h"
-
-std::string MyPromoter::PromoterIP = "92.202.0.12";
+std::string MyPromoter::PromoterIP = "APIServer_IP";
 unsigned short MyPromoter::PromoterPort = 80;
-std::string MyPromoter::PromoterHost = "92.202.0.12:80";
+std::string MyPromoter::PromoterHost = "APIServer_Host";
 
-std::string MySkyway::apikey = "1b0d7257-dd43-4b59-9161-847db4df15fa";
-std::string MySkyway::skywayHost = "localhost:8000";
-std::string MyUserClass::EncodePiperUrl = "C:\\Users\\student\\Documents\\2022Tango\\PipeTest\\PipeTest\\x64\\Debug\\EncodePiper.exe";
+std::string MySkyway::apikey = "SkyWay_APIkey";
+std::string MySkyway::skywayHost = "SkyWay_GateWay";
+std::string MyUserClass::EncodePiperUrl = "path_to_EncodePiper.exe";
 
-std::string MyUserClass::GameEngineUrlNight = "C:\\Users\\student\\Documents\\Unreal Projects\\221020-75\\Windows\\MyProject3.exe";
+std::string MyUserClass::GameEngineUrlNight = "path_to_GameEngineForNight.exe";
 
-std::string MyUserClass::GameEngineUrlDay = "C:\\Users\\student\\Documents\\Unreal Projects\\Hiru221018\\Package\\221021\\Windows\\MyProject3.exe";
+std::string MyUserClass::GameEngineUrlDay = "path_to_GameEngineForDay.exe";
 
 
 int main()
@@ -198,77 +195,3 @@ int main()
 
 	std::printf("ServerID:%d success stop! Please check the database when you re-start!", serverID);
 }
-
-//int main()
-//{
-//    MyHttp::StartWSA();
-//
-// 
-// 		newstatus = "WAITING_NEW_CLIENT";
-//		MyPromoter::RserverStatusUpdate(serverID, newstatus, Clients.size(), Promoter);
-//
-//    MyUserClass a;
-//    a.SetMPeerId("testmedia");
-//    a.SetDPeerId("testdata");
-//
-//    a.SetDRecvPort(65000);
-//    int MyRes[2] = { 540,1050 };
-//    a.SetResolution({MyRes});
-//    a.SetPipeNum(1);
-//
-//    MyHttp b("127.0.0.1", 8000);
-//
-//    MySkyway::MMakePeer(b, a);
-//    MySkyway::DMakePeer(b, a);
-//    MySkyway::MWaitBindPeer(b, a);
-//    MySkyway::DWaitBindPeer(b, a);
-//    MySkyway::MOpenSendPort(b, a);
-//    MySkyway::DOpenSendPort(b, a);
-//    MySkyway::MWaitCall(b, a);
-//    MySkyway::DWaitConnect(b, a);
-//
-//    std::cout << "media send port:" << a.MSendPort() << std::endl;
-//    std::cout << "data recv port:" << a.DRecvPort() << std::endl;
-//    std::cout << "data send port:" << a.DSendPort() << std::endl;
-//
-//    a.CreateEncodePiper();
-//    a.CreateGameEngine();
-//
-//    //while (1)
-//    //{
-//    //    std::string line;
-//    //    std::cin >> line;
-//    //    if (line == "start")
-//    //    {
-//    //        break;
-//    //    }
-//    //}
-//   
-//    MySkyway::MAnswerCall(b, a);
-//    MySkyway::DWaitOpen(b, a);
-//    MySkyway::MStartStream(b, a);
-//    MySkyway::DPutParams(b, a);
-//
-//
-//    while (1)
-//    {
-//        std::string line;
-//        std::cin >> line;
-//        if (line == "quit")
-//        {
-//            std::cout << a.CloseEncodePiper();
-//            Sleep(1000);
-//            std::cout << a.CloseGameEngine();
-//            //std::cout << a.CloseEncodePiper();
-//
-//            MySkyway::MCloseStream(b, a);
-//            MySkyway::DCloseConnect(b, a);
-//            MyHttp::CleanWSA();
-//            return 0;
-//        }
-//        else
-//        {
-//            std::cout << "unknown" << std::endl;
-//        }
-//    }
-//}

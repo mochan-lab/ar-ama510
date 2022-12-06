@@ -6,9 +6,6 @@ var MySendStatus = {
     cstatus: 0,
     rstatus: 0,
     cloc: [0.0, 0.0, 0.0],  //X,Y,Z
-    // crotx: [0.0, 0.0, 0.0],
-    // croty: [0.0, 0.0, 0.0],
-    // crotz: [0.0, 0.0, 0.0]   //Pitch,Yaw,Roll
     crot:[0.0,0.0,0.0]
 };
 var backtwocrot = [0.0,0.0,0.0];
@@ -25,7 +22,8 @@ var MySetting={
 }
 
 const peer = new Peer({
-    key: '1b0d7257-dd43-4b59-9161-847db4df15fa',
+    key: 'SkyWay_APIKey',
+    // Forcibly use TURN server.
     // config: {
     //     iceTransportPolicy: 'relay',
     // },
@@ -43,7 +41,7 @@ var relativeCount = 0;
 
 
 // WITH PROMOTER API
-const PromoterUrl = "https://amatakat.tech";
+const PromoterUrl = "APIServer_URL";
 const RequestMakeClient=()=>{
     return new Promise((resolve,reject)=>{
         MySetting.width=innerWidth;
@@ -53,6 +51,7 @@ const RequestMakeClient=()=>{
             reject("NotDefine");
             return;
         }
+        // iOS device's H264 decoder need image sizes are multiples of 16
         let pluwid = 16 - (MySetting.width % 16);
         let pluhei = 16 - (MySetting.width % 16); 
         let clientmeta = {
@@ -62,7 +61,6 @@ const RequestMakeClient=()=>{
             // clientheight: (MySetting.height + pluhei) / 2,
             useragent: MySetting.ua
         }
-        // let sendbody = JSON.stringify(clientmeta);
         $.ajax({
             type: "POST",
             url: PromoterUrl + "/client/connect",
@@ -196,16 +194,6 @@ const getCallee = () => {
                     }
                 })
             },1000)}
-            // if(fdata.status=="NOW_CHECKING"){
-            //     ret = getCallee();
-            //     return ret;
-            // }else if(fdata.status=="SOON_CALL"){
-            //     MySetting.dpeerid=fdata.dpeerid;
-            //     MySetting.mpeerid=fdata.mpeerid;
-            //     return 0;
-            // }else{
-            //     return 1;
-            // }
         })
     })
 }
@@ -221,20 +209,19 @@ const wantquit = () => {
     navigator.sendBeacon(url,data);
 }
 
+// MRの位置合わせにVPSを利用する予定だったが、現地都合で最終的には利用せず。コード自体は動作確認済み。
 // WITH IMMERSAL
 var cameraIntrinsics = {x:0.0,y:0.0,z:0.0,w:0.0};
 var encodedImage= null;
 var isLocalizing=false;
 var localizingCount=0;
 const immersalUrl = "https://api.immersal.com";
-const immersalToken="eb242e70d6da9379e58e4d07ddfe374ac9d245d848217b53ded57d8e2973de6e";
-const immersalMapId=51466; //220908 captured #61561
+const immersalToken="immersal_SDK_key";
+const immersalMapId=0000; // your immersal map ID 
 const flagRelativeLoc=[400.0, -100.0 , 30.0];
 var relativeheading=0;
 
 const degtorad = Math.PI / 180;
-
-
 
 // IMMERSAL VPS FUNCTIONS
 const localize=(cvs)=>{
@@ -276,6 +263,7 @@ const localize=(cvs)=>{
 };
 
 // WEBGL FUNCTIONS
+// initWebGLについて、昼コンテンツと夜コンテンツでクロマキー合成のパラメータを変えた方が綺麗に合成出来たため、昼用と分かれている。
 const initWebGL = ()=>{
     return new Promise((resolve, reject)=>{
         const scene = new THREE.Scene();
@@ -349,12 +337,6 @@ const initWebGL = ()=>{
         scene.add(recvsprite);
         recvsprite.position.set(0, 0, 10);
 
-    // renderer.setAnimationLoop(function() {
-    //     renderer.render(scene, camera);
-    //     if(MySendStatus.cstatus==-1 && !isLocalizing){ // it truly 1 !!
-    //         localize(glCanvas);            
-    //     }
-    // });
         const animate = () => {
             renderer.render( scene, camera );
             if(MySendStatus.cstatus==-1 && !isLocalizing){ // it truly 1 !!
@@ -447,12 +429,6 @@ const initWebGLDay = ()=>{
         scene.add(recvsprite);
         recvsprite.position.set(0, 0, 10);
 
-    // renderer.setAnimationLoop(function() {
-    //     renderer.render(scene, camera);
-    //     if(MySendStatus.cstatus==-1 && !isLocalizing){ // it truly 1 !!
-    //         localize(glCanvas);            
-    //     }
-    // });
         const animate = () => {
             renderer.render( scene, camera );
             if(MySendStatus.cstatus==-1 && !isLocalizing){ // it truly 1 !!
@@ -511,12 +487,7 @@ const MakeCall = () =>{
 
 // INHERIT DEVICE SETTINGS FUNCTIONS
 const cameraSetting = () =>{
-    return new Promise((resolve,reject)=>{
-    // MySetting.width=innerWidth;
-    // MySetting.height=innerHeight;
-    // console.log([MySetting.width,MySetting.height]);
-    // MakeCall();
-    // initwebGL();    
+    return new Promise((resolve,reject)=>{ 
     navigator.mediaDevices.getUserMedia({
         audio: false,
         video:{
@@ -541,8 +512,6 @@ const cameraSetting = () =>{
         myCameraElm.srcObject = stream;
         myCameraElm.play();
 
-        // MakeCall();
-        //  initWebGL();
         resolve("getcamerasettting");
         return;
     })
@@ -555,6 +524,7 @@ const cameraSetting = () =>{
 })
 }
 
+// カメラパラメータを定義している。
 const getCameraIntrinsics = (width,height) => {
     const fy = 960;
     cameraIntrinsics.x = fy*height/width;
@@ -595,12 +565,6 @@ const handleOrientation=(e)=>{
     MySendStatus.crot[1]=ret[1] - 10;
     MySendStatus.crot[2]=ret[2];
     MySendStatus.csend=performance.now();
-    // if(isStartSendUDP && sendCount>5){
-    //     dataConnection.send(JSON.stringify(MySendStatus));
-    //     // console.log(ret);
-    //     sendCount = 0;
-    // }
-    // sendCount ++;
 }
 
 const compassHeading = (alpha, beta, gamma) => {  
@@ -669,25 +633,6 @@ const compassHeading = (alpha, beta, gamma) => {
 			sy * sz - cy * sx * cz,
 			cy * cx,
         ];
-        // var axisZ = [
-		// 	-populateMatrix[4],
-		// 	populateMatrix[8],
-		// 	-populateMatrix[0]
-        // ];
-
-		// // ローカル y 軸ベクトル
-		// var axisX = [
-        // -populateMatrix[5],
-        // -populateMatrix[9],
-        // populateMatrix[1]
-        // ];
-
-		// // ローカル z 軸ベクトル
-		// var axisY = [
-        // -populateMatrix[6],
-        // -populateMatrix[20],
-        // populateMatrix[2]
-        // ];
 
         retx=axisX;
         rety=axisY;
@@ -858,7 +803,8 @@ const checkDeviceLocation = () => {
         };
         const success = (pos) => {
             const crd=pos.coords;
-            if( // 10km square
+            if( // サービスを利用できる座標を制限していた。
+                // 10km square
                 // crd.latitude>35.5345 &&
                 // crd.latitude<35.6245 &&
                 // crd.longitude>135.124 &&
@@ -892,21 +838,21 @@ const checkDeviceLocation = () => {
 }
 
 const showForm = () => {
-    // const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdfT7pb5LXntDGXaIlQtxSe0sdGgInShS9n97Q_45QUs6EAhA/viewform?usp=pp_url&entry.1379539065=" + MySendStatus.client;
+    // コンテンツ終了後、ユーザ識別子を事前入力した状態のGoogleFormに飛べるようにしていた。
+    const formURL = "GoogleForm_URL" + MySendStatus.client;
     const formDiv = document.getElementById("form-div");
-    // const formLink = document.getElementById("form-link");
-    // document.body.appendChild(formDiv);
-    // formLink.onclick = ()=>{
-    //     wantquit();
-    //     location.replace(formURL);
-    //     return false;
-    // }
+    const formLink = document.getElementById("form-link");
+    document.body.appendChild(formDiv);
+    formLink.onclick = ()=>{
+        wantquit();
+        location.replace(formURL);
+        return false;
+    }
     formDiv.classList.add('fadein');
     formDiv.classList.remove('is-hidden');
 }
 
-
-
+// 夜コンテンツは動画からMRへシームレスに転換させていた。
 // let loadedVideo = false;
 let loadedAudio = false;
 const gettouch=()=>{
@@ -984,7 +930,7 @@ const touchStartModal = () =>{
 }
 
 const showFormDay = () => {
-    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdfT7pb5LXntDGXaIlQtxSe0sdGgInShS9n97Q_45QUs6EAhA/viewform?usp=pp_url&entry.1379539065=" + MySendStatus.client;
+    const formURL = "GoogleForm_URL" + MySendStatus.client;
     const underForm = document.getElementById("under-form");
     const underFormLink = document.getElementById("under-form-link");
     const formDiv = document.getElementById("form-div");
@@ -1028,6 +974,7 @@ const touchStartModalDay = () =>{
     setTimers();
 }
 
+//　デバイスの時計を元に昼と夜でコンテンツを切り替えていた。
 //WINDOW ONLOAD
 const now = new Date();
 // if(now.getHours() >= 17 || 6 > now.getHours()){ //nighttime

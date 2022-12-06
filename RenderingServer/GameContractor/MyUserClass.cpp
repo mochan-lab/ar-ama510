@@ -79,25 +79,6 @@ int MyUserClass::CreateGameEngine()
 	TCHAR* buf = new TCHAR[bufSize];
 	MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, src, -1, buf, bufSize);
 
-
-
-	//std::string lineEXE = MyUserClass::GameEngineUrl;
-	//const char* exe = lineEXE.c_str();
-	//int exeBufSize = MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, exe, -1, NULL, 0);
-	//TCHAR* exeBuf = new TCHAR[bufSize];
-	//MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, exe, -1, exeBuf, exeBufSize);
-
-	//std::string argLine =
-	//	"gameengine --resw " + std::to_string(this->ResolutionW()) +
-	//	" --resh " + std::to_string(this->ResolutionH()) +
-	//	" --portrecv " + std::to_string(this->DRecvPort()) +
-	//	" --portsend " + std::to_string(this->DSendPort()) +
-	//	" --pipe " + std::to_string(this->PipeNum());
-	//const char* argsrc = argLine.c_str();
-	//int argBufSize = MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, argsrc, -1, NULL, 0);
-	//TCHAR* argBuf = new TCHAR[argBufSize];
-	//MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, argsrc, -1, argBuf, exeBufSize);
-
 	int ret = CreateProcess(
 		NULL,
 		buf,

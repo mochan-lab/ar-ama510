@@ -3,16 +3,15 @@ from starlette.middleware.cors import CORSMiddleware
 from . import routers
 from .sql import database
 
+#データベースをbind
 database.Base.metadata.create_all(bind=database.engine)
 
 
 app = FastAPI()
 
+#Cross-Origin Resource Sharing（CORS）解決のため
 origins = [
-    "http://ar-ama510.com",
-    "https://ar-ama510.com",
-    "http://ar-ama510.conohawing.com",
-    "https://ar-ama510.conohawing.com"
+    "Clients_domain"
 ]
 app.add_middleware(
     CORSMiddleware,
