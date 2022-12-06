@@ -1,0 +1,5 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: 中間ディレクトリ (x64\Debug\) に別のプロジェクト (PipeTest.vcxproj) と共有されているファイルが含まれています。これにより、クリーンしてリビルド動作が適切に行われない可能性があります。
+  MyGst.cpp
+C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0\glib\gtestutils.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student\Documents\2022Tango\PipeTest\PipeTest\MyGst.cpp(98,31): warning C4267: '=': 'size_t' から 'guint' に変換しました。データが失われているかもしれません。
+  PipeTest.vcxproj -> C:\Users\student\Documents\2022Tango\PipeTest\PipeTest\x64\Debug\EncodePiper.exe

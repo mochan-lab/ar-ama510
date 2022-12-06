@@ -1,0 +1,9 @@
+.vs/
+/TestScripts/
+/RenderingServer/GameEngine/Binaries/
+/RenderingServer/GameEngine/Build/
+/RenderingServer/GameEngine/DerivedDataCache/
+/RenderingServer/GameEngine/Intermediate/
+/RenderingServer/GameEngine/Package/
+/RenderingServer/GameEngine/Saved/
+/RenderingServer/GameEngine/Script/
